@@ -1,0 +1,21 @@
+{
+  "name": "poc_project5",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lorcan Blake",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^9.0.2",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mysql": "^2.18.1",
+    "pug": "^3.0.2"
+  }
+}

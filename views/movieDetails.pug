@@ -1,0 +1,25 @@
+extends layout
+block content
+    include partials/header
+    .main.container
+        section.cards
+            img.category__01(src=movieDetails.image.medium alt='')
+            .card-content
+                h1 #{movieDetails.name}
+                h3 #{movieDetails.premiered}
+                h3 #{movieDetails.genres}
+                h3 #{movieDetails.language}
+                p #{movieDetails.summary}
+                footer
+                    .post-meta
+                         span.comments
+                            p Rating: #{movieDetails.rating.average}
+
+
+
+
+
+
+
+
+

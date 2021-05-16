@@ -1,0 +1,20 @@
+extends layout
+block content
+    include partials/header
+    .main.container
+        section.cards
+          // card 1
+          each movie in movies
+              article.card
+                picture.thumbnail
+                a(href="shows/"+movie.id)
+
+                    img.category__01(src=movie.image.medium alt='')
+                .card-content
+                  h2 #{movie.name}
+
+                // .card-content
+                footer
+                  .post-meta
+                    span.comments
+                      p Rating: #{movie.rating.average}
