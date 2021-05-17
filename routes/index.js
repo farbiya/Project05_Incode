@@ -1,18 +1,20 @@
 const { requireAuth, setAuthToken, unsetAuthToken } = require("../controllers/auth");
 const loginController = require('../controllers/loginController');
-
+const signupController = require('../controllers/signupController');
 const axios = require("axios")
 const movieUrl = "http://api.tvmaze.com/shows"
 
 module.exports = (app) => {
   app.get("/", async (req, res) => {
-
+    // const searchQuery = req.query.search
+    // const searchResponse= await axios.get("http://api.tvmaze.com/search/shows?q="+searchQuery)
     const response = await axios.get(movieUrl)
     const movies = response.data.slice(0,20)
+    //
     res.render("index", { movies })
 
   });
-  app.get("/shows/:id", async (req, res) => {
+  app.get("/shows/:id", requireAuth, async (req, res) => {
     try {
 
       const id = req.params.id
@@ -42,13 +44,8 @@ module.exports = (app) => {
     res.redirect("/login");
   });
 
-  app.get("/signup", (req, res) => {
-    res.render("signup");
-  });
-
-  app.post("/signup", (req, res) => {
-    // if reg is valid, show a message and redirect to login
-  });
+  app.get("/signup", signupController.index);
+  app.post("/signup", signupController.getUserDetails);
 
 
 
