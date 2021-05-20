@@ -13,7 +13,50 @@ block content
                 footer
                     .post-meta
                          span.comments
-                            p Rating: #{movieDetails.rating.average}
+                            p Rating: #{movieDetails.rating}
+                            p Total votes:#{movieDetails.ratingCount}
+            if currentUser
+                ul.rate-area Click on star to rate the movie!!
+                  input#5-star(type='radio' name='rating' value='5')
+                  label(for='5-star' title='Amazing') 5 stars
+                  input#4-star(type='radio' name='rating' value='4')
+                  label(for='4-star' title='Good') 4 stars
+                  input#3-star(type='radio' name='rating' value='3')
+                  label(for='3-star' title='Average') 3 stars
+                  input#2-star(type='radio' name='rating' value='2')
+                  label(for='2-star' title='Not Good') 2 stars
+                  input#1-star(type='radio' name='rating' value='1')
+                  label(for='1-star' title='Bad') 1 star
+
+    script.
+        $("ul input:radio").click(function() {
+            const rating = $(this).val()
+            event.preventDefault();
+            ajaxPost(rating);
+        })
+
+        function ajaxPost(rating) {
+            let formData = {
+                rating
+            }
+
+
+            $.ajax({
+                type : "POST",
+                url : window.location,
+                data : formData,
+                success : function(res) {
+
+                    if(res === "error")
+                        alert("You have already rated for this movie")
+                    else
+                        window.location.href = window.location
+                },
+                error : function(e) {
+                    console.log("ERROR: ", e);
+                }
+            });
+        }
 
 
 

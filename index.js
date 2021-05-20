@@ -4,7 +4,7 @@ const mysql = require("mysql");
 const path = require('path');
 const config = require("./config/config");
 const routesManager = require("./routes");
-
+const cors = require('cors')
 const db = mysql.createConnection(config);
 
 db.connect(async function (err) {
@@ -15,6 +15,7 @@ db.connect(async function (err) {
   const app = express();
 
   // Register middlewares
+  app.use(cors())
   app.use(cookieParser(""));
   app.use(express.static(path.join(__dirname ,'public')));
   app.use(express.urlencoded({extended: false
@@ -26,7 +27,7 @@ db.connect(async function (err) {
 
     // Inject the user to the request
     req.user = authToken;
-
+    res.locals.currentUser = authToken
     req.con = db
     next()
   })

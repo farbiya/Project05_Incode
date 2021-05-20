@@ -2,14 +2,34 @@ extends layout
 block content
     include partials/header
     .main.container
+
+
+
+        form.example()
+              select#genre
+                          option(selected='' disabled='') Genre
+                          option(value='Comedy') Comedy
+                          option(value='Romance') Romance
+                          option(value='Thriller') Thriller
+                          option(value='Action') Action
+                          option(value='Crime') Crime
+                          option(value='Drama') Drama
+                          option(value='Music') Music
+                          option(value='Horror') Horror
+                          option(value='Adventure') Adventure
+                          option(value='Science-Fiction') Science-Fiction
+              input(type='text' placeholder='Search..' name='search' id="search-input")
+              button(type='submit')
+                i.fa.fa-search
+
         section.cards
 
           each movie in movies
               article.card
                 picture.thumbnail
-                a(href="shows/"+movie.id)
+                    a(href="shows/"+movie.id)
 
-                    img.category__01(src=movie.image.medium alt='')
+                        img.category__01(src=movie.image.medium alt='')
                 .card-content
                   h2 #{movie.name}
 
@@ -17,4 +37,71 @@ block content
                 footer
                   .post-meta
                     span.comments
-                      p Rating: #{movie.rating.average}
+                      p Rating: #{movie.rating}
+                      p Total Votes: #{movie.ratingCount}
+
+    script.
+        $("button").click(function(e){
+            e.preventDefault();
+
+            let genre = $("#genre").val()
+            let searchQuery = $("#search-input").val()
+            if(searchQuery === "")
+
+            alert("no search keyword")
+
+            else
+            $.ajax({
+                url: 'http://api.tvmaze.com/search/shows/?q='+searchQuery,
+                method: 'GET',
+                success: function(data){
+                  $(".cards").html("")
+                  let movies = data.filter((movie) => {
+                                      if(genre != null && !movie.show.genres.includes(genre))
+                                          return false
+                                      return movie
+
+                                    })
+                  movies = movies.slice(0,20)
+                  html = ""
+                  movies.forEach((movie, index) => {
+                    html +='<div class="cards"><article class="card"><picture class="thumbnail"><a href="shows/'+movie.show.id+'"><img src="'+movie.show.image?.medium+'" /></a></picture></article></div>'
+                  })
+
+                  $(".cards").html(html)
+
+                }
+              });
+        });
+
+//-         $("#genre").change(() => {
+//-
+//-             let genre = $("#genre").val()
+//-             let searchQuery = $("#search-input").val()
+//-
+//-             $.ajax({
+//-                 url: 'http://api.tvmaze.com/shows',
+//-                 method: 'GET',
+//-                 success: function(data){
+//-                   $(".cards").html("")
+//-                   let movies = data.filter((movie) => {
+//-                     if(genre != "" && !movie.genres.includes(genre))
+//-                         return false
+//-                     if(searchQuery != "" && !movie.name.includes(searchQuery))
+//-                         return false
+//-                     return movie
+//-
+//-                   })
+//-                   movies = movies.slice(0,20)
+//-                   html = ""
+//-                   movies.forEach((movie, index) => {
+//-                     html +='<div class="cards"><article class="card"><picture class="thumbnail"><a href="shows/'+movie.id+'"><img src="'+movie.image.medium+'" /></a></picture></article></div>'
+//-                   })
+//-
+//-                   $(".cards").html(html)
+//-
+//-                 }
+//-               });
+
+
+        })

@@ -76,7 +76,7 @@ footer {
 
 .comments {
     margin-left: .5rem;
-    float: right;
+    float: left;
 }
 /* Base Styles */
 
@@ -229,13 +229,95 @@ a:hover {
     margin-top: 10px;
     padding: 4px 10px;
     font-size: 1rem;
-    background-color: #233338;
+    background-color: #263647;
     border: 1px solid #0a1618;
-;
     border-radius: 7px;
     outline: none;
     cursor: pointer;
 }
+
+form.example input[type=text] {
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid grey;
+    float: left;
+    color: #203238;
+    width: 80%;
+    background: #f1f1f1;
+}
+form.example select{
+    float: left;
+    width: 10%;
+    padding: 11px;
+    background: #f1f1f1;
+}
+
+
+form.example button {
+    float: right;
+    width: 10%;
+    padding: 14px;
+    background: #263647;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    border-left: none;
+    cursor: pointer;
+}
+
+form.example button:hover {
+    background: #203238;
+}
+
+form.example::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+
+.rate-area {
+    float: left;
+    border-style: none;
+}
+
+.rate-area:not(:checked) > input {
+    position: absolute;
+    top: -9999px;
+    clip: rect(0, 0, 0, 0);
+}
+
+.rate-area:not(:checked) > label {
+    float: right;
+    width: 0.8em;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 180%;
+    color: lightgrey;
+}
+
+.rate-area:not(:checked) > label:before {
+    content: "★";
+}
+
+.rate-area > input:checked ~ label {
+    color: gold;
+}
+
+.rate-area:not(:checked) > label:hover,
+.rate-area:not(:checked) > label:hover ~ label {
+    color: gold;
+}
+
+.rate-area > input:checked + label:hover,
+.rate-area > input:checked + label:hover ~ label,
+.rate-area > input:checked ~ label:hover,
+.rate-area > input:checked ~ label:hover ~ label,
+.rate-area > label:hover ~ input:checked ~ label {
+    color: gold;
+}
+
 
 /* Media Queries */
 
