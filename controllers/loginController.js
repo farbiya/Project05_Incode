@@ -11,7 +11,7 @@ module.exports = {
 
     getUser: (req, res) => {
         let {email, password} = req.body
-console.log(password)
+
         if (!email || !password)
             return false
         password = crypto.createHash('sha256').update(password).digest('hex')
@@ -21,7 +21,7 @@ console.log(password)
                 let token = jwt.sign({id: rows[0].id}, config.secret, {
                     expiresIn: 86400 // 24 hours
                 });
-                console.log(token)
+
                 res.cookie('AuthToken', token);
                 res.redirect('/')
             } else
